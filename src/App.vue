@@ -1,7 +1,9 @@
 <template>
 	<div>
 		<t-header></t-header>
-		<card></card>
+		<div class="main">
+			<card></card>
+		</div>
 	</div>
 </template>
 
@@ -19,4 +21,12 @@
 
 <style>
 @import url(./assets/styles/base.css);
+
+.main {
+	padding-top: 60px;
+	flex: 1;
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+}
 </style>
