@@ -1,10 +1,23 @@
 <template>
 	<header>
 		<h1 class="header__title">墨迹天气</h1>
-		<button id="btn-refresh" class="header-button" aria-label="刷新"></button>
-		<button id="btn-add" class="header-button" aria-label="添加"></button>
+		<button id="btn-refresh" class="header-button" aria-label="刷新" @click="onRefresh"></button>
+		<button id="btn-add" class="header-button" aria-label="添加" @click="onAddCity"></button>
 	</header>
 </template>
+
+<script>
+	export default {
+		methods: {
+			onRefresh () {
+				this.$emit('on-refresh')
+			},
+			onAddCity () {
+				this.$emit('on-add-city')
+			}
+		}
+	}
+</script>
 
 <style>
 	header {
