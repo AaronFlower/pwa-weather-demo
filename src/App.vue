@@ -2,10 +2,8 @@
 	<div id="app-container">
 		<t-header @on-refresh="onRefresh" @on-add-city="onAddCity"></t-header>
 		<div class="main">
-			<template v-for="city in cityList">
-				<template v-if="city.weatherInfo">
-					<card :weather-info="city.weatherInfo"></card>
-				</template>
+			<template v-for="weatherInfo in weatherList">
+				<card :weather-info="weatherInfo"></card>
 			</template>
 		</div>
 		<add-dialog 
@@ -32,6 +30,9 @@
 		data () {
 			return {
 				show: false,
+				weatherList: [],
+				initialCity: ['2151849'],
+				selectedCities: [],
 				cityList: [{
 					woeid: '2151849',
 					weatherInfo: {
@@ -191,19 +192,22 @@
 			onConfirm (woeid) {
 				if (findIndex(this.cityList, {woeid: woeid}) === -1) {
 					getCityForcast(woeid).then(res => {
-						this.cityList.push({
-							woeid: woeid,
-							weatherInfo: res
-						})
+						this.selectedCities.push(woeid)
+						localStorage.selectedCities = JSON.stringify(this.selectedCities)
+						this.weatherList.push(res)
 					})
 				}
 				this.show = false
-				console.log('on-confirm', woeid)
 			},
 			onCancel () {
-				console.log('on-cancel')
 				this.show = false
 			}
+		},
+		created () {
+			this.selectedCities = localStorage && localStorage.selectedCities && JSON.parse(localStorage.selectedCities) || this.initialCity
+			this.selectedCities.forEach(woeid => {
+				getCityForcast(woeid).then(res => this.weatherList.push(res))
+			})
 		}
 	}
 </script>
