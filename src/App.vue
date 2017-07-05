@@ -11,6 +11,7 @@
 			@on-confirm="onConfirm"
 			@on-cancel="onCancel"
 		></add-dialog>
+		<loading v-show="isLoading"></loading>
 	</div>
 </template>
 
@@ -18,6 +19,7 @@
 	import THeader from 'components/header'
 	import Card from 'components/card'
 	import AddDialog from 'components/AddDialog'
+	import Loading from 'components/loading'
 	import {getCityForcast} from 'api'
 	import findIndex from 'lodash/findIndex'
 
@@ -25,14 +27,16 @@
 		components: {
 			THeader,
 			Card,
-			AddDialog
+			AddDialog,
+			Loading
 		},
 		data () {
 			return {
 				show: false,
 				weatherList: [],
 				initialCity: ['2151849'],
-				selectedCities: []
+				selectedCities: [],
+				isLoading: false
 			}
 		},
 		methods: {
@@ -40,13 +44,23 @@
 				this.show = true
 			},
 			onRefresh () {
-				console.log('on-refresh')
+				this.isLoading = true
+				this.selectedCities.forEach(woeid => {
+					getCityForcast(woeid, this.updateForcastData.bind(this))
+				})
+				setTimeout(function () {
+					this.isLoading = false
+				}.bind(this), 1000)
 			},
 			onConfirm (woeid) {
 				if (findIndex(this.weatherList, {woeid: woeid}) === -1) {
+					this.isLoading = true
 					getCityForcast(woeid, this.updateForcastData.bind(this))
 					this.selectedCities.push(woeid)
 					localStorage.selectedCities = JSON.stringify(this.selectedCities)
+					setTimeout(function () {
+						this.isLoading = false
+					}.bind(this), 1000)
 				}
 				this.show = false
 			},
@@ -64,9 +78,7 @@
 		},
 		created () {
 			this.selectedCities = localStorage && localStorage.selectedCities && JSON.parse(localStorage.selectedCities) || this.initialCity
-			this.selectedCities.forEach(woeid => {
-				getCityForcast(woeid, this.updateForcastData.bind(this))
-			})
+			this.onRefresh()
 			localStorage.selectedCities = JSON.stringify(this.selectedCities)
 		}
 	}
