@@ -21,13 +21,22 @@ module.exports = {
 
 	resolve: {
 		alias: {
-			components: path.resolve(__dirname, './src/components')
+			components: path.resolve(__dirname, './src/components'),
+			api: path.resolve(__dirname, './src/api')
 		},
 		extensions: ['.js', '.vue']
 	},
 
 	module: {
 		rules: [
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loader: 'babel-loader',
+				query: {
+				  presets: ['es2015']
+				}
+			},
 			{
 				test: /\.vue$/,
 				loader: 'vue-loader',

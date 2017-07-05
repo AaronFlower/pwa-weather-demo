@@ -1,6 +1,6 @@
 <template>
 	<div class="weather-forcast-weather">
-		<div class="location">{{weatherInfo.label}}</div>
+		<div class="location">{{weatherInfo.channel.location.city}}</div>
 		<div class="date">{{weatherInfo.channel.item.condition.date}}</div>
 		<div class="desc">{{weatherInfo.channel.item.condition.text}}</div>
 		<div class="current">
@@ -23,17 +23,19 @@
 		</div>
 		<div class="future">
 			<template v-for="(item, index) in weatherInfo.channel.item.forecast">
-				<div class="oneday">
-					<div class="date">{{getDate(index)}}</div>
-					<icon :icon-name="getIconClass(item.code)"></icon>
-					<div class="temperature high">
-						<span class="value">{{convertToCelsius(item.high)}}</span>
+				<template v-if="index < 7">
+					<div class="oneday">
+						<div class="date">{{getDate(index)}}</div>
+						<icon :icon-name="getIconClass(item.code)"></icon>
+						<div class="temperature high">
+							<span class="value">{{convertToCelsius(item.high)}}</span>
+						</div>
+						<div class="temperature low">
+							<span class="value">{{convertToCelsius(item.low)}}</span>
+						</div>
 					</div>
-					<div class="temperature low">
-						<span class="value">{{convertToCelsius(item.low)}}</span>
-					</div>
-				</div>
-			</template >
+				</template>
+			</template>
 		</div>
 	</div>
 </template>
@@ -50,39 +52,148 @@ export default {
 			type: Object,
 			default () {
 				return {
-					key: '2459115',
-					label: 'New York, NY',
-					created: '2016-07-22T01:00:00Z',
-					channel: {
-					  astronomy: {
-					    sunrise: "5:43 am",
-					    sunset: "8:21 pm"
+					"channel": {
+					  "units": {
+					    "distance": "mi",
+					    "pressure": "in",
+					    "speed": "mph",
+					    "temperature": "F"
 					  },
-					  item: {
-					    condition: {
-					      text: "Windy",
-					      date: new Date().toUTCString(),
-					      temp: 56,
-					      code: 44
+					  "title": "Yahoo! Weather - Shanghai, Shanghai, CN",
+					  "link": "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2151849/",
+					  "description": "Yahoo! Weather for Shanghai, Shanghai, CN",
+					  "language": "en-us",
+					  "lastBuildDate": "Wed, 05 Jul 2017 10:42 AM CST",
+					  "ttl": "60",
+					  "location": {
+					    "city": "Shanghai",
+					    "country": "China",
+					    "region": " Shanghai"
+					  },
+					  "wind": {
+					    "chill": "91",
+					    "direction": "245",
+					    "speed": "4"
+					  },
+					  "atmosphere": {
+					    "humidity": "61",
+					    "pressure": "1009.0",
+					    "rising": "0",
+					    "visibility": "16.1"
+					  },
+					  "astronomy": {
+					    "sunrise": "4:55 am",
+					    "sunset": "7:2 pm"
+					  },
+					  "image": {
+					    "title": "Yahoo! Weather",
+					    "width": "142",
+					    "height": "18",
+					    "link": "http://weather.yahoo.com",
+					    "url": "http://l.yimg.com/a/i/brand/purplelogo//uh/us/news-wea.gif"
+					  },
+					  "item": {
+					    "title": "Conditions for Shanghai, Shanghai, CN at 10:00 AM CST",
+					    "lat": "31.247709",
+					    "long": "121.472618",
+					    "link": "http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2151849/",
+					    "pubDate": "Wed, 05 Jul 2017 10:00 AM CST",
+					    "condition": {
+					      "code": "4",
+					      "date": "Wed, 05 Jul 2017 10:00 AM CST",
+					      "temp": "92",
+					      "text": "Thunderstorms"
 					    },
-					    forecast: [
-					      {code: 44, high: 86, low: 70},
-					      {code: 44, high: 94, low: 73},
-					      {code: 4, high: 95, low: 78},
-					      {code: 24, high: 75, low: 89},
-					      {code: 24, high: 89, low: 77},
-					      {code: 44, high: 92, low: 79},
-					      {code: 44, high: 89, low: 77}
-					    ]
-					  },
-					  atmosphere: {
-					    humidity: 56
-					  },
-					  wind: {
-					    speed: 25,
-					    direction: 195
+					    "forecast": [
+					      {
+					        "code": "4",
+					        "date": "05 Jul 2017",
+					        "day": "Wed",
+					        "high": "91",
+					        "low": "80",
+					        "text": "Thunderstorms"
+					      },
+					      {
+					        "code": "4",
+					        "date": "06 Jul 2017",
+					        "day": "Thu",
+					        "high": "90",
+					        "low": "81",
+					        "text": "Thunderstorms"
+					      },
+					      {
+					        "code": "4",
+					        "date": "07 Jul 2017",
+					        "day": "Fri",
+					        "high": "92",
+					        "low": "80",
+					        "text": "Thunderstorms"
+					      },
+					      {
+					        "code": "4",
+					        "date": "08 Jul 2017",
+					        "day": "Sat",
+					        "high": "91",
+					        "low": "82",
+					        "text": "Thunderstorms"
+					      },
+					      {
+					        "code": "26",
+					        "date": "09 Jul 2017",
+					        "day": "Sun",
+					        "high": "90",
+					        "low": "81",
+					        "text": "Cloudy"
+					      },
+					      {
+					        "code": "4",
+					        "date": "10 Jul 2017",
+					        "day": "Mon",
+					        "high": "89",
+					        "low": "81",
+					        "text": "Thunderstorms"
+					      },
+					      {
+					        "code": "4",
+					        "date": "11 Jul 2017",
+					        "day": "Tue",
+					        "high": "89",
+					        "low": "81",
+					        "text": "Thunderstorms"
+					      },
+					      {
+					        "code": "4",
+					        "date": "12 Jul 2017",
+					        "day": "Wed",
+					        "high": "89",
+					        "low": "80",
+					        "text": "Thunderstorms"
+					      },
+					      {
+					        "code": "30",
+					        "date": "13 Jul 2017",
+					        "day": "Thu",
+					        "high": "88",
+					        "low": "80",
+					        "text": "Partly Cloudy"
+					      },
+					      {
+					        "code": "4",
+					        "date": "14 Jul 2017",
+					        "day": "Fri",
+					        "high": "88",
+					        "low": "81",
+					        "text": "Thunderstorms"
+					      }
+					    ],
+					    "description": "<![CDATA[<img src=\"http://l.yimg.com/a/i/us/we/52/4.gif\"/>\n<BR />\n<b>Current Conditions:</b>\n<BR />Thunderstorms\n<BR />\n<BR />\n<b>Forecast:</b>\n<BR /> Wed - Thunderstorms. High: 91Low: 80\n<BR /> Thu - Thunderstorms. High: 90Low: 81\n<BR /> Fri - Thunderstorms. High: 92Low: 80\n<BR /> Sat - Thunderstorms. High: 91Low: 82\n<BR /> Sun - Cloudy. High: 90Low: 81\n<BR />\n<BR />\n<a href=\"http://us.rd.yahoo.com/dailynews/rss/weather/Country__Country/*https://weather.yahoo.com/country/state/city-2151849/\">Full Forecast at Yahoo! Weather</a>\n<BR />\n<BR />\n(provided by <a href=\"http://www.weather.com\" >The Weather Channel</a>)\n<BR />\n]]>",
+					    "guid": {
+					      "isPermaLink": "false"
+					    }
 					  }
-					}
+					},
+					"woeid": "2151849",
+					"created": "2017-07-05T02:42:53Z"
 				}
 			}
 		}

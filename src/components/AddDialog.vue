@@ -5,13 +5,11 @@
 			<div class="dialog-body">
 				<select id="selectCityToAdd" v-model="woeid">
 					<option value="2151849">Shanghai</option>
-					<option value="2357536">Austin, TX</option>
-					<option value="2367105">Boston, MA</option>
-					<option value="2379574">Chicago, IL</option>
-					<option value="2459115">New York, NY</option>
-					<option value="2475687">Portland, OR</option>
-					<option value="2487956">San Francisco, CA</option>
-					<option value="2490383">Seattle, WA</option>
+					<option value="2132574">Hangzhou</option>
+					<option value="2137082">Suzhou</option>
+					<option value="2172747">Zhoukou</option>
+					<option value="2151330">Beijing</option>
+					<option value="2161853">Shenzhen</option>
 				</select>
 			</div>
 			<div class="dialog-footer">
