@@ -9,7 +9,7 @@ const copyWebpackPlugin = require('copy-webpack-plugin')
  * 因为相应的 module 根据就没有打包 css. 所以在配置时应该注意。
  */
  
-module.exports = {
+let config = {
 	entry: {
 		app: './src/app.js'
 	},
@@ -42,7 +42,7 @@ module.exports = {
 				loader: 'vue-loader',
 				options: {
 				  postcss: [require('postcss-cssnext')()],
-					// extractCSS: true
+					extractCSS: process.env.NODE_ENV === 'production'
 				}
 			}
 		]
@@ -67,3 +67,9 @@ module.exports = {
 		port: process.env.PORT || 3303
 	}
 }
+
+if (process.env.NODE_ENV === 'production') {
+	config.plugins.push(new extractTextWebpackPlugin('style.css'))
+}
+
+module.exports = config

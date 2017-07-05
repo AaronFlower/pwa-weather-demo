@@ -2,6 +2,7 @@ const baseUrl = 'https://query.yahooapis.com/v1/public/yql?format=json&q='
 const statement = 'select * from weather.forecast where woeid='
 
 export function getCityForcast (woeid) {
+	console.log('woeid:', 'woeid')
   let url = `${baseUrl}${statement}${woeid}`
 	return new Promise((resolve, reject) => {
 		let request = new XMLHttpRequest();
